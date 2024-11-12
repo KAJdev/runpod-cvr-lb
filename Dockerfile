@@ -15,6 +15,8 @@ FROM runpod/base:0.4.0-cuda11.8.0
 
 
 
+
+
 # Python dependencies
 COPY builder/requirements.txt /requirements.txt
 RUN python3.11 -m pip install --upgrade pip && \
