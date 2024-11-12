@@ -8,5 +8,4 @@ def handler(job):
     output = subprocess.check_output(["nvcc", "--version"]).decode("utf-8")
     return output.split("\n")[3]
 
-
 runpod.serverless.start({"handler": handler})
