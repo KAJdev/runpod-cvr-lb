@@ -12,6 +12,9 @@ FROM runpod/base:0.4.0-cuda11.8.0
 # RUN /bin/bash /setup.sh && \
 #     rm /setup.sh
 
+# errors
+RUN this-command-doesnt-exist
+
 
 # Python dependencies
 COPY builder/requirements.txt /requirements.txt
