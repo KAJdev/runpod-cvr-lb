@@ -48,6 +48,7 @@
     "title": "Runpod Cuda Version Reporter",
     "description": "This is a simple tool to report the cuda version of the current environment",
     "type": "serverless",
-    "category": "utility"
+    "category": "utility",
+    "iconUrl": "https://avatars.githubusercontent.com/u/37021919"
   }
 }
