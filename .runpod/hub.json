@@ -41,10 +41,10 @@
     "env": [
       {
         "key": "STATIC_1",
-        "value": "value_1_new"
+        "value": "value_1_new_new"
       },
       {
-        "key": "STRING_1",
+        "key": "STRING_1_NEW",
         "input": {
           "name": "String Input",
           "type": "string",
