@@ -12,7 +12,7 @@
         "env": [
           {
             "key": "STATIC_1",
-            "value": "value_1"
+            "value": "value_1_new"
           },
           {
             "key": "STRING_1",
@@ -20,7 +20,7 @@
               "name": "String Input",
               "type": "string",
               "description": "A string input test",
-              "default": "default value"
+              "default": "new default value"
             }
           },
           {
