@@ -1,5 +1,5 @@
 {
-  "title": "Runpod Cuda Version Reporter",
+  "title": "Runpod Cuda Version Reporter"
   "description": "This is a simple tool to report the cuda version of the current environment",
   "type": "serverless",
   "category": "utility",
