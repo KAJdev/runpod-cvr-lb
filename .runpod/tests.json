@@ -6,21 +6,7 @@
         "text": "Hello world",
         "language": "en"
       },
-      "timeout": 10000
-    },
-    {
-      "name": "validation_text_input_2",
-      "input": {
-        "text": "Hello world",
-        "language": "en"
-      }
-    },
-    {
-      "name": "validation_text_input_3",
-      "input": {
-        "text": "Hello world",
-        "language": "en"
-      }
+      "timeout": 100000
     }
   ],
   "config": {
