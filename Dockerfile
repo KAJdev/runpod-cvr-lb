@@ -13,6 +13,7 @@ FROM runpod/base:0.6.3-cuda11.8.0
 #     rm /setup.sh
 
 # testing
+ARG TEST_ARG
 RUN [ -z "$TEST_ARG" ] \
     && (echo "! TEST_ARG missing" && false) \
     || echo "✓ TEST_ARG is $TEST_ARG"
