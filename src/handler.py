@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """
-Simple Sanic service that returns the relevant `nvcc --version` line.
+Simple Sanic service that reports the CUDA version line from `nvcc --version`
+and exposes a /ping health-check endpoint.
 
-RunPod sets the PORT env var for serverless containers;
-we bind to it so the ingress can reach the process.
+RunPod sets the PORT env var for serverless containers; we bind to it so the
+ingress can reach the process.
 """
 
 import os
@@ -15,8 +16,14 @@ from sanic.response import text
 app = Sanic("cuda_version_service")
 
 
+@app.get("/ping")
+async def ping(request):
+    """Health-check route: always returns HTTP 200."""
+    return text("pong\n", status=200)
+
+
 @app.get("/")
-async def cuda_version(request):  # GET /
+async def cuda_version(request):
     """Return CUDA version (the 4th line from `nvcc --version`)."""
     # Simulate a long-running job
     await asyncio.sleep(10)
@@ -24,14 +31,14 @@ async def cuda_version(request):  # GET /
     # This log should be visible in sls-local-server
     print("this is a log that should be captured by sls-local-server")
 
-    # Run nvcc in a worker thread so we don’t block the event loop
+    # Run nvcc without blocking the event loop
     loop = asyncio.get_running_loop()
     raw = await loop.run_in_executor(
         None, subprocess.check_output, ["nvcc", "--version"]
     )
 
     line = raw.decode("utf-8").split("\n")[3]  # same slice as your original code
-    return text(line + "\n")  # plain-text response
+    return text(line + "\n")
 
 
 if __name__ == "__main__":
