@@ -1,17 +1,40 @@
-import time
-import runpod
+#!/usr/bin/env python3
+"""
+Simple Sanic service that returns the relevant `nvcc --version` line.
+
+RunPod sets the PORT env var for serverless containers;
+we bind to it so the ingress can reach the process.
+"""
+
+import os
+import asyncio
 import subprocess
+from sanic import Sanic
+from sanic.response import text
 
-def handler(job):
-    """get CUDA version"""
+app = Sanic("cuda_version_service")
 
-    # sleep for 10 seconds to simulate a long running job
-    time.sleep(10)
 
+@app.get("/")
+async def cuda_version(request):  # GET /
+    """Return CUDA version (the 4th line from `nvcc --version`)."""
+    # Simulate a long-running job
+    await asyncio.sleep(10)
+
+    # This log should be visible in sls-local-server
     print("this is a log that should be captured by sls-local-server")
 
-    output = subprocess.check_output(["nvcc", "--version"]).decode("utf-8")
-    print(output)
-    return output.split("\n")[3]
+    # Run nvcc in a worker thread so we don’t block the event loop
+    loop = asyncio.get_running_loop()
+    raw = await loop.run_in_executor(
+        None, subprocess.check_output, ["nvcc", "--version"]
+    )
 
-runpod.serverless.start({"handler": handler})
+    line = raw.decode("utf-8").split("\n")[3]  # same slice as your original code
+    return text(line + "\n")  # plain-text response
+
+
+if __name__ == "__main__":
+    # Default to 8080 when testing locally
+    port = int(os.getenv("PORT", 8080))
+    app.run(host="0.0.0.0", port=port, access_log=True)
